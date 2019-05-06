@@ -3,10 +3,10 @@ import { Field, reduxForm } from 'redux-form';
 
 class QuestionForm extends Component {
 	renderInput({ input, label }) {
+		// console.log(input);
 		return (
 			<div>
-				<label>{label}</label>
-				<input {...input} />
+				<input type="radio" {...input} />
 			</div>
 		);
 	}
@@ -18,9 +18,17 @@ class QuestionForm extends Component {
 			<div>
 				<h3>Question Form Exam</h3>
 				<form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-					<Field name="title" component={this.renderInput} label="Enter Title" />
+					<fieldset>
+						<legend>Personalia eewfewfwfewfew:</legend>
+						Yes: <Field name="gender" value="male" type="radio" component={this.renderInput} />
+						No: <Field name="gender" value="female" type="radio" component={this.renderInput} />
+					</fieldset>
+					<fieldset>
+						<legend>Personalia eewfewfwfewfew:</legend>
+						Yes: <Field name="dbz" value="goku" type="radio" component={this.renderInput} />
+						No: <Field name="dbz" value="vegeta" type="radio" component={this.renderInput} />
+					</fieldset>
 
-					<Field name="description" component={this.renderInput} label="Enter Description" />
 					<button>Submit</button>
 				</form>
 			</div>

@@ -13,7 +13,7 @@ class QuestionList extends Component {
 		// });
 		return (
 			<div>
-				<QuestionForm />
+				<QuestionForm examQuestions={this.props.questions} />
 			</div>
 		);
 	}

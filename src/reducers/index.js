@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
 const questionReducer = () => {
 	return [
@@ -54,5 +55,6 @@ const selectedQuestionReducer = (selectedQuestion = null, action) => {
 
 export default combineReducers({
 	questions: questionReducer,
-	selectedQuestion: selectedQuestionReducer
+	selectedQuestion: selectedQuestionReducer,
+	form: formReducer
 });

@@ -17,4 +17,4 @@ workflows:
   apex_fortnite:
     jobs:
       - apex
-      - fornite
+      - fortnite

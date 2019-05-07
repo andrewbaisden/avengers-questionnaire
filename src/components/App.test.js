@@ -19,7 +19,7 @@ it('renders without crashing', () => {
 describe('It does a calculation', () => {
 	it('sums up', () => {
 		expect(3).toEqual(3);
-		expect(4).toEqual(4);
+		expect(6).toEqual(4);
 		expect(8).toEqual(8);
 	});
 });

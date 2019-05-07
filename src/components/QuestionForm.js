@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
@@ -29,8 +29,9 @@ body {
     grid-template-columns: 1fr;
     margin: 0 auto;
 }
-.container h1 {
+.container h1, h2 {
     text-align: center;
+    margin-bottom: 2rem;
 }
 .question-container {
     margin-bottom: 2rem;
@@ -63,6 +64,27 @@ border: 1px solid black;
 }
 .results p {
 padding: 1rem;
+}
+.container-retry {
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+}
+.retry-btn {
+    padding: 1rem;
+    border: 0;
+    text-align: center;
+    font-weight: 400;
+    background: green;
+    border-radius: 1rem;
+    color: white;
+    text-transform: uppercase;
+    font-size: 2rem;
+    cursor: pointer;
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 500px;
 }
 `;
 
@@ -102,7 +124,7 @@ class QuestionForm extends Component {
 		calcValues(`${formValues.bows}`, `${this.props.examQuestions[6].answers.answerTwo.answer}`);
 		calcValues(`${formValues.starkFamily}`, `${this.props.examQuestions[7].answers.answerOne.answer}`);
 		calcValues(`${formValues.computerGame}`, `${this.props.examQuestions[8].answers.answerTwo.answer}`);
-		calcValues(`${formValues.elizabethOlsen}`, `${this.props.examQuestions[9].answers.answerOne.answer}`);
+		calcValues(`${formValues.elizabethOlsen}`, `${this.props.examQuestions[9].answers.answerTwo.answer}`);
 
 		console.log(total);
 
@@ -112,7 +134,7 @@ class QuestionForm extends Component {
 		let output = '';
 		output += `
             <div class="container-results">
-            <div><h1>Exam Results</div>
+            <div><h2>Exam Results</h2></div>
             <div class="results">
                 <p>Question 1 Answer: ${formValues.strongestAvenger}</p>
                 <p>Question 2 Answer: ${formValues.spidermanHome}</p>
@@ -317,8 +339,8 @@ class QuestionForm extends Component {
 						<button className="submit-btn">Submit</button>
 					</form>
 					<div ref={this.examQuestions} className="exam-results" />
-					<div className="container">
-						<button ref={this.retryExam} class="submit-btn hide" onClick={this.reloadExam}>
+					<div className="container-retry">
+						<button ref={this.retryExam} className="retry-btn hide" onClick={this.reloadExam}>
 							Try Again
 						</button>
 					</div>

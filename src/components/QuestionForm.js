@@ -1,83 +1,381 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import styled, { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+:root {
+  --primary-colour: #343436; 
+}
+html {
+  font-size: 62.5%; /* font-size 1em = 10px on default browser settings */
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+    font-size: 1.6rem;
+    font-family: 'Lato', sans-serif;
+}
+.hide {
+    display: none;
+}
+.container {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+}
+.container h1 {
+    text-align: center;
+}
+.question-container {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    
+}
+legend {
+    font-weight: bold;
+    padding: 1rem;
+}
+.error {
+    color: green;
+    padding: 1rem;
+}
+.submit-btn {
+    padding: 1rem;
+    border: 0;
+    text-align: center;
+    font-weight: 400;
+    background: green;
+    border-radius: 1rem;
+    color: white;
+    text-transform: uppercase;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.exam-results {
+margin: 0 auto;
+border: 1px solid black;
+}
+.results p {
+padding: 1rem;
+}
+`;
 
 class QuestionForm extends Component {
-	renderInput({ input, label }) {
+	constructor(props) {
+		super(props);
+		this.form = React.createRef();
+		this.examQuestions = React.createRef();
+		this.retryExam = React.createRef();
+	}
+	renderInput({ input, label, meta }) {
 		// console.log(input);
 		return (
 			<div>
 				<input type="radio" {...input} />
+				<div className="error">{meta.error}</div>
 			</div>
 		);
 	}
-	onSubmit(formValues) {
+	onSubmit = formValues => {
 		console.log(formValues);
+
+		let total = 0;
+
+		const calcValues = (name, answer) => {
+			if (`${name}` === answer) {
+				total += 1;
+			}
+		};
+
+		calcValues(`${formValues.strongestAvenger}`, `${this.props.examQuestions[0].answers.answerOne.answer}`);
+		calcValues(`${formValues.spidermanHome}`, `${this.props.examQuestions[1].answers.answerOne.answer}`);
+		calcValues(`${formValues.hulkName}`, `${this.props.examQuestions[2].answers.answerTwo.answer}`);
+		calcValues(`${formValues.ironManMovies}`, `${this.props.examQuestions[3].answers.answerOne.answer}`);
+		calcValues(`${formValues.infinityStones}`, `${this.props.examQuestions[4].answers.answerOne.answer}`);
+		calcValues(`${formValues.thanosWorld}`, `${this.props.examQuestions[5].answers.answerTwo.answer}`);
+		calcValues(`${formValues.bows}`, `${this.props.examQuestions[6].answers.answerTwo.answer}`);
+		calcValues(`${formValues.starkFamily}`, `${this.props.examQuestions[7].answers.answerOne.answer}`);
+		calcValues(`${formValues.computerGame}`, `${this.props.examQuestions[8].answers.answerTwo.answer}`);
+		calcValues(`${formValues.elizabethOlsen}`, `${this.props.examQuestions[9].answers.answerOne.answer}`);
+
+		console.log(total);
+
+		this.form.current.classList.add('hide');
+		this.retryExam.current.classList.remove('hide');
+
+		let output = '';
+		output += `
+            <div class="container-results">
+            <div><h1>Exam Results</div>
+            <div class="results">
+                <p>Question 1 Answer: ${formValues.strongestAvenger}</p>
+                <p>Question 2 Answer: ${formValues.spidermanHome}</p>
+                <p>Question 3 Answer: ${formValues.hulkName}</p>
+                <p>Question 4 Answer: ${formValues.ironManMovies}</p>
+                <p>Question 5 Answer: ${formValues.infinityStones}</p>
+                <p>Question 6 Answer: ${formValues.thanosWorld}</p>
+                <p>Question 7 Answer: ${formValues.bows}</p>
+                <p>Question 8 Answer: ${formValues.starkFamily}</p>
+                <p>Question 9 Answer: ${formValues.computerGame}</p>
+                <p>Question 10 Answer: ${formValues.elizabethOlsen}</p>
+            </div>
+            <div><h1>Total Score: ${total}/10</h1></div>
+            </div>
+        `;
+
+		this.examQuestions.current.innerHTML = output;
+	};
+	reloadExam() {
+		document.location.href = 'http://localhost:3000/';
+		console.log('Retry Exam');
 	}
+
 	render() {
 		return (
 			<div>
-				<h3>Question Form Exam</h3>
-				<form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-					<fieldset>
-						<legend>{this.props.examQuestions[0].question}:</legend>
-						Thor: <Field name="strongestAvenger" value="Thor" type="radio" component={this.renderInput} />
-						Captain Marvel:
-						<Field name="strongestAvenger" value="Captain Marvel" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[1].question}:</legend>
-						New York: <Field name="spidermanHome" value="New York" type="radio" component={this.renderInput} />
-						California: <Field name="spidermanHome" value="California" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[2].question}:</legend>
-						Edward Connor: <Field name="hulkName" value="Edward Connor" type="radio" component={this.renderInput} />
-						Bruce Banner: <Field name="hulkName" value="Bruce Banner" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[3].question}:</legend>
-						3: <Field name="ironManMovies" value="3" type="radio" component={this.renderInput} />
-						4: <Field name="ironManMovies" value="4" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[4].question}:</legend>
-						7: <Field name="infinityStones" value="7" type="radio" component={this.renderInput} />
-						6: <Field name="infinityStones" value="6" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[5].question}:</legend>
-						Mandalore: <Field name="thanosWorld" value="Mandalore" type="radio" component={this.renderInput} />
-						Titan: <Field name="thanosWorld" value="Titan" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[6].question}:</legend>
-						Hawkman: <Field name="bows" value="Hawkman" type="radio" component={this.renderInput} />
-						Hawkeye: <Field name="bows" value="Hawkeye" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[7].question}:</legend>
-						Jarvis: <Field name="starkFamily" value="Jarvis" type="radio" component={this.renderInput} />
-						Alfred: <Field name="starkFamily" value="Alfred" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[8].question}:</legend>
-						Apex Legends: <Field name="computerGame" value="Apex Legends" type="radio" component={this.renderInput} />
-						Fortnite: <Field name="computerGame" value="Fortnite" type="radio" component={this.renderInput} />
-					</fieldset>
-					<fieldset>
-						<legend>{this.props.examQuestions[9].question}:</legend>
-						Jean Grey: <Field name="elizabethOlsen" value="Jean Grey" type="radio" component={this.renderInput} />
-						Scarlet Witch:{' '}
-						<Field name="elizabethOlsen" value="Scarlet Witch" type="radio" component={this.renderInput} />
-					</fieldset>
+				<GlobalStyle />
+				<div className="container">
+					<h1>Avengers Exam</h1>
+					<form ref={this.form} onSubmit={this.props.handleSubmit(this.onSubmit)}>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[0].question}:</legend>
+							{this.props.examQuestions[0].answers.answerOne.answer}
+							<Field
+								name="strongestAvenger"
+								value={this.props.examQuestions[0].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[0].answers.answerTwo.answer}:
+							<Field
+								name="strongestAvenger"
+								value={this.props.examQuestions[0].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[1].question}:</legend>
+							{this.props.examQuestions[1].answers.answerOne.answer}{' '}
+							<Field
+								name="spidermanHome"
+								value={this.props.examQuestions[1].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[1].answers.answerTwo.answer}:
+							<Field
+								name="spidermanHome"
+								value={this.props.examQuestions[1].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[2].question}:</legend>
+							{this.props.examQuestions[2].answers.answerOne.answer}:
+							<Field
+								name="hulkName"
+								value={this.props.examQuestions[2].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[2].answers.answerTwo.answer}:{' '}
+							<Field
+								name="hulkName"
+								value={this.props.examQuestions[2].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[3].question}:</legend>
+							{this.props.examQuestions[3].answers.answerOne.answer}:{' '}
+							<Field
+								name="ironManMovies"
+								value={this.props.examQuestions[3].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[3].answers.answerTwo.answer}:{' '}
+							<Field
+								name="ironManMovies"
+								value={this.props.examQuestions[3].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[4].question}:</legend>
+							{this.props.examQuestions[4].answers.answerOne.answer}:{' '}
+							<Field
+								name="infinityStones"
+								value={this.props.examQuestions[4].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[4].answers.answerTwo.answer}:{' '}
+							<Field
+								name="infinityStones"
+								value={this.props.examQuestions[4].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[5].question}:</legend>
+							{this.props.examQuestions[5].answers.answerOne.answer}:{' '}
+							<Field
+								name="thanosWorld"
+								value={this.props.examQuestions[5].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[5].answers.answerTwo.answer}:{' '}
+							<Field
+								name="thanosWorld"
+								value={this.props.examQuestions[5].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[6].question}:</legend>
+							{this.props.examQuestions[6].answers.answerOne.answer}:{' '}
+							<Field
+								name="bows"
+								value={this.props.examQuestions[6].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[6].answers.answerTwo.answer}:{' '}
+							<Field
+								name="bows"
+								value={this.props.examQuestions[6].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[7].question}:</legend>
+							{this.props.examQuestions[7].answers.answerOne.answer}:{' '}
+							<Field
+								name="starkFamily"
+								value={this.props.examQuestions[7].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[7].answers.answerTwo.answer}:{' '}
+							<Field
+								name="starkFamily"
+								value={this.props.examQuestions[7].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[8].question}:</legend>
+							{this.props.examQuestions[8].answers.answerOne.answer}:{' '}
+							<Field
+								name="computerGame"
+								value={this.props.examQuestions[8].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[8].answers.answerTwo.answer}:{' '}
+							<Field
+								name="computerGame"
+								value={this.props.examQuestions[8].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
+						<fieldset className="question-container">
+							<legend>{this.props.examQuestions[9].question}:</legend>
+							{this.props.examQuestions[9].answers.answerOne.answer}:{' '}
+							<Field
+								name="elizabethOlsen"
+								value={this.props.examQuestions[9].answers.answerOne.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+							{this.props.examQuestions[9].answers.answerTwo.answer}:
+							<Field
+								name="elizabethOlsen"
+								value={this.props.examQuestions[9].answers.answerTwo.answer}
+								type="radio"
+								component={this.renderInput}
+							/>
+						</fieldset>
 
-					<button>Submit</button>
-				</form>
+						<button className="submit-btn">Submit</button>
+					</form>
+					<div ref={this.examQuestions} className="exam-results" />
+					<div className="container">
+						<button ref={this.retryExam} class="submit-btn hide" onClick={this.reloadExam}>
+							Try Again
+						</button>
+					</div>
+				</div>
 			</div>
 		);
 	}
 }
 
+const validate = formValues => {
+	const errors = {};
+
+	const errorMessage = 'You must enter a value';
+
+	if (!formValues.strongestAvenger) {
+		errors.strongestAvenger = errorMessage;
+	}
+
+	if (!formValues.spidermanHome) {
+		errors.spidermanHome = errorMessage;
+	}
+
+	if (!formValues.hulkName) {
+		errors.hulkName = errorMessage;
+	}
+
+	if (!formValues.ironManMovies) {
+		errors.ironManMovies = errorMessage;
+	}
+
+	if (!formValues.infinityStones) {
+		errors.infinityStones = errorMessage;
+	}
+
+	if (!formValues.thanosWorld) {
+		errors.thanosWorld = errorMessage;
+	}
+
+	if (!formValues.bows) {
+		errors.bows = errorMessage;
+	}
+	if (!formValues.starkFamily) {
+		errors.starkFamily = errorMessage;
+	}
+
+	if (!formValues.computerGame) {
+		errors.computerGame = errorMessage;
+	}
+
+	if (!formValues.elizabethOlsen) {
+		errors.elizabethOlsen = errorMessage;
+	}
+
+	return errors;
+};
+
 export default reduxForm({
-	form: 'questionForm'
+	form: 'questionForm',
+	validate
 })(QuestionForm);

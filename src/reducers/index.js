@@ -85,7 +85,7 @@ const questionReducer = () => {
 		},
 		{
 			id: 6,
-			question: 'What planet is thanos from?',
+			question: 'What planet is Thanos from?',
 			answers: {
 				answerOne: {
 					id: 1,
@@ -142,7 +142,7 @@ const questionReducer = () => {
 				},
 				answerTwo: {
 					id: 2,
-					answer: 'Fortnie',
+					answer: 'Fortnite',
 					correct: true
 				}
 			}

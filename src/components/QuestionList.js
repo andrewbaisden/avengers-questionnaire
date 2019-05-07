@@ -20,9 +20,7 @@ class QuestionList extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div>
-					<h2>Question List</h2>
-				</div>
+				<div />
 				<div>{this.renderList()}</div>
 			</React.Fragment>
 		);

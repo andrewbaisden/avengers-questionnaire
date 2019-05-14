@@ -163,7 +163,7 @@ class QuestionForm extends Component {
 			<div>
 				<GlobalStyle />
 				<div className="container">
-					<h1>Avengers Exam</h1>
+					<h1>Avengers: Endgame Exam</h1>
 					<form ref={this.form} onSubmit={this.props.handleSubmit(this.onSubmit)}>
 						<fieldset className="question-container">
 							<legend>{this.props.examQuestions[0].question}:</legend>

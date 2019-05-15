@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-const questionReducer = () => {
+export const questionReducer = () => {
 	return [
 		{
 			id: 1,
@@ -166,7 +166,7 @@ const questionReducer = () => {
 	];
 };
 
-const selectedQuestionReducer = (selectedQuestion = null, action) => {
+export const selectedQuestionReducer = (selectedQuestion = null, action) => {
 	if (action.type === 'QUESTION_SELECTED') {
 		return action.payload;
 	}

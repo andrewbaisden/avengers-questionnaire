@@ -4,13 +4,6 @@ import QuestionForm from './QuestionForm';
 
 class QuestionList extends Component {
 	renderList() {
-		// return this.props.questions.map(exam => {
-		// 	return (
-		// 		<div key={exam.id}>
-		// 			<p>{exam.question}</p>
-		// 		</div>
-		// 	);
-		// });
 		return (
 			<div>
 				<QuestionForm examQuestions={this.props.questions} />
@@ -27,7 +20,7 @@ class QuestionList extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
 	// console.log(state);
 	return { questions: state.questions };
 };

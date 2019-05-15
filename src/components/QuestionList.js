@@ -20,7 +20,7 @@ class QuestionList extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
 	// console.log(state);
 	return { questions: state.questions };
 };

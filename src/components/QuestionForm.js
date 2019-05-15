@@ -350,7 +350,7 @@ class QuestionForm extends Component {
 	}
 }
 
-const validate = formValues => {
+export const validate = formValues => {
 	const errors = {};
 
 	const errorMessage = 'You must enter a value';

@@ -21,7 +21,6 @@ class QuestionList extends Component {
 }
 
 export const mapStateToProps = state => {
-	// console.log(state);
 	return { questions: state.questions };
 };
 

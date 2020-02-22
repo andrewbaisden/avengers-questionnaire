@@ -1,13 +1,9 @@
 # Avengers Questionnaire Exam
 
-In the project directory, you can run:
+![Avengers Exam](https://res.cloudinary.com/d74fh3kw/image/upload/v1582390929/avengers_exam_kqf45z.jpg 'Avengers Exam')
 
-## `npm install`
+## Install
 
-In the root folder, to install the dependencies
+1. In the root folder run the command `npm install`
 
-## `npm start`
-
-Runs the app in the development mode.
-
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Then run the command `npm start` to run the app

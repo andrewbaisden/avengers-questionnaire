@@ -1,6 +1,6 @@
 # Avengers Questionnaire Exam
 
-![Avengers Exam](https://res.cloudinary.com/d74fh3kw/image/upload/v1582390929/avengers_exam_kqf45z.jpg 'Avengers Exam')
+![Avengers Exam](/img/avengers-questionnaire.jpeg 'Avengers Exam')
 
 ## Install
 
